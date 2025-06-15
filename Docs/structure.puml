@@ -1,0 +1,46 @@
+@startuml
+
+class App
+{
+
+}
+
+class Game
+{
+}
+
+class PlayerController
+{
+}
+
+class Match
+{
+}
+
+class Piece
+{
+}
+
+class PieceDefinition
+{
+}
+
+class Board
+{
+}
+
+class Actor
+{
+}
+
+Piece --|> Actor
+Board --|> Actor
+App *-- Game
+Game *-- Match
+Game *-- PlayerController
+PlayerController *-- Piece
+Piece *-- PieceDefinition
+Match *-- Board
+Match *-- Piece
+
+@enduml
