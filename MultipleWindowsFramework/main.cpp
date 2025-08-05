@@ -4,6 +4,7 @@
 
 //----------------------------------------------------------------------------------------------------
 #include "GameCommon.hpp"
+#include "Renderer.hpp"
 
 //----------------------------------------------------------------------------------------------------
 int WINAPI WinMain(HINSTANCE const hInstance,
@@ -11,9 +12,6 @@ int WINAPI WinMain(HINSTANCE const hInstance,
                    LPSTR           lpCmdLine,
                    int const       nShowCmd)
 {
-    CoInitialize(nullptr);
-
-    // 創建隱藏的主窗口
     HWND const hiddenWindow = CreateWindowEx(
         NULL,
         L"STATIC",
@@ -26,16 +24,14 @@ int WINAPI WinMain(HINSTANCE const hInstance,
         nullptr
     );
 
-    // 初始化渲染器
-    g_theRenderer = new RendererEx();
-    if (FAILED(g_theRenderer->Initialize(hiddenWindow)))
+    g_renderer = new Renderer();
+    if (FAILED(g_renderer->Initialize(hiddenWindow)))
     {
         MessageBox(nullptr, L"Failed to initialize renderer", L"Error", MB_OK);
         return -1;
     }
 
     CreateAndRegisterMultipleWindows(hInstance, 10);
-
 
     // 主訊息循環
     MSG  msg     = {};
@@ -56,16 +52,16 @@ int WINAPI WinMain(HINSTANCE const hInstance,
 
         if (running)
         {
-            if (g_theRenderer)
+            if (g_renderer)
             {
-                g_theRenderer->Render();
+                g_renderer->Render();
             }
             Sleep(16); // ~60 FPS
         }
     }
 
     // 清理
-    delete g_theRenderer;
+    delete g_renderer;
     DestroyWindow(hiddenWindow);
     CoUninitialize();
     return 0;

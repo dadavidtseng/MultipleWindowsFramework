@@ -2,14 +2,15 @@
 // GameCommon.h
 //----------------------------------------------------------------------------------------------------
 
+//----------------------------------------------------------------------------------------------------
 #pragma once
-#include <vector>
 #include <windows.h>
 
-#include "RendererEx.hpp"
+//-Forward-Declaration--------------------------------------------------------------------------------
+class Renderer;
 
-extern RendererEx* g_theRenderer;
-// extern std::vector<HWND> g_gameWindows;
+//----------------------------------------------------------------------------------------------------
+extern Renderer* g_renderer;
 
 void CreateAndRegisterMultipleWindows(HINSTANCE hInstance, int windowCount);
-HWND CreateGameWindow(HINSTANCE hInstance, const wchar_t* title, int x, int y, int width, int height);
+HWND CreateGameWindow(HINSTANCE hInstance,  wchar_t const* title, int x, int y, int width, int height);

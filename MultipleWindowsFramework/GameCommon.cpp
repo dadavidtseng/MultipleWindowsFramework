@@ -2,22 +2,27 @@
 // GameCommon.cpp
 //----------------------------------------------------------------------------------------------------
 
+//----------------------------------------------------------------------------------------------------
 #include "GameCommon.hpp"
-#include "WindowEx.hpp"
 
 #include <string>
 
-RendererEx*       g_theRenderer = nullptr;
-// std::vector<HWND> g_gameWindows;
+#include "Renderer.hpp"
+#include "Window.hpp"
 
-void CreateAndRegisterMultipleWindows(HINSTANCE hInstance, int windowCount)
+//----------------------------------------------------------------------------------------------------
+Renderer* g_renderer = nullptr;
+
+//----------------------------------------------------------------------------------------------------
+void CreateAndRegisterMultipleWindows(HINSTANCE const hInstance,
+                                      int const       windowCount)
 {
-    const int width   = 400;
-    const int height  = 300;
-    const int startX  = 100;
-    const int startY  = 100;
-    const int offsetX = 450;
-    const int offsetY = 350;
+    int const width   = 400;
+    int const height  = 300;
+    int const startX  = 100;
+    int const startY  = 100;
+    int const offsetX = 450;
+    int const offsetY = 350;
 
     for (int i = 0; i < windowCount; ++i)
     {
@@ -28,13 +33,12 @@ void CreateAndRegisterMultipleWindows(HINSTANCE hInstance, int windowCount)
         HWND hwnd = CreateGameWindow(hInstance, title.c_str(), x, y, width, height);
         if (hwnd)
         {
-            // g_gameWindows.push_back(hwnd);
-            g_theRenderer->AddWindow(hwnd);
+            g_renderer->AddWindow(hwnd);
         }
     }
 }
 
-// 創建窗口
+//----------------------------------------------------------------------------------------------------
 HWND CreateGameWindow(HINSTANCE const hInstance,
                       wchar_t const*  title,
                       int const       x,
@@ -42,9 +46,6 @@ HWND CreateGameWindow(HINSTANCE const hInstance,
                       int const       width,
                       int const       height)
 {
-    // static bool classRegistered = false;
-    // if (!classRegistered)
-    // {
     WNDCLASS wc      = {};
     wc.lpfnWndProc   = WindowsMessageHandlingProcedure;
     wc.hInstance     = hInstance;
@@ -53,8 +54,6 @@ HWND CreateGameWindow(HINSTANCE const hInstance,
     wc.hCursor       = LoadCursor(nullptr, IDC_ARROW);
 
     RegisterClass(&wc);
-    // classRegistered = true;
-    // }
 
     HWND hwnd = CreateWindowEx(
         0,
@@ -71,7 +70,6 @@ HWND CreateGameWindow(HINSTANCE const hInstance,
     if (hwnd)
     {
         ShowWindow(hwnd, SW_SHOW);
-        // UpdateWindow(hwnd);
     }
 
     return hwnd;
